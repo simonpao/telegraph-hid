@@ -6,6 +6,11 @@ class MorseCode:
     CHAR = DAH    # Inter-character space (the gap between the characters of a word): 3 units
     WORD = DIT*7  # Word space (the gap between two words): 7 units
 
+    # CASES = {
+    UPPER = "upper"
+    LOWER = "lower"
+    MORSE = "morse"
+
     MORSE_CODE = {
         # Letters
         ".-":    "A", "-...":  "B", "-.-.":  "C", "-..":   "D",
@@ -36,7 +41,16 @@ class MorseCode:
     }
 
     ASCII_TO_KEYCODES = {
-        # Letters
+        # Lowercase Letters
+        "a": [KeyCode.A], "b": [KeyCode.B], "c": [KeyCode.C], "d": [KeyCode.D],
+        "e": [KeyCode.E], "f": [KeyCode.F], "g": [KeyCode.G], "h": [KeyCode.H],
+        "i": [KeyCode.I], "j": [KeyCode.J], "k": [KeyCode.K], "l": [KeyCode.L],
+        "m": [KeyCode.M], "n": [KeyCode.N], "o": [KeyCode.O], "p": [KeyCode.P],
+        "q": [KeyCode.Q], "r": [KeyCode.R], "s": [KeyCode.S], "t": [KeyCode.T],
+        "u": [KeyCode.U], "v": [KeyCode.V], "w": [KeyCode.W], "x": [KeyCode.X],
+        "y": [KeyCode.Y], "z": [KeyCode.Z],
+
+        # Uppercase Letters
         "A": [KeyCode.SHIFT, KeyCode.A], "B": [KeyCode.SHIFT, KeyCode.B], "C": [KeyCode.SHIFT, KeyCode.C], "D": [KeyCode.SHIFT, KeyCode.D],
         "E": [KeyCode.SHIFT, KeyCode.E], "F": [KeyCode.SHIFT, KeyCode.F], "G": [KeyCode.SHIFT, KeyCode.G], "H": [KeyCode.SHIFT, KeyCode.H],
         "I": [KeyCode.SHIFT, KeyCode.I], "J": [KeyCode.SHIFT, KeyCode.J], "K": [KeyCode.SHIFT, KeyCode.K], "L": [KeyCode.SHIFT, KeyCode.L],
@@ -64,10 +78,12 @@ class MorseCode:
     }
 
     @staticmethod
-    def get_ascii(morse_code):
-        return MorseCode.MORSE_CODE.get(morse_code, "?")
+    def get_ascii(morse_code, case):
+            if(case == MorseCode.LOWER):
+                return MorseCode.MORSE_CODE.get(morse_code, "?").lower()
+            return MorseCode.MORSE_CODE.get(morse_code, "?")
     
     @staticmethod
-    def get_keycode(morse_code):
-        ascii_char = MorseCode.get_ascii(morse_code)
+    def get_keycode(morse_code, case):
+        ascii_char = MorseCode.get_ascii(morse_code, case)
         return MorseCode.ASCII_TO_KEYCODES.get(ascii_char, [KeyCode.SHIFT, KeyCode.FORWARD_SLASH])
